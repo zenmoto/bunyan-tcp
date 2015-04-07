@@ -31,7 +31,6 @@ var log = bunyan.createLogger({
 | reconnectDelay | Time to pause between disconnect and reconnect (in ms) | 500ms | 
 | offlineBuffer | Number of messages to buffer while disconnected | 100 messages |
 
-
 ## Events
 | Name | Description | Arguments
 |------|-------------|----------|
@@ -46,6 +45,6 @@ var log = bunyan.createLogger({
 | connect | If previously closed, attempts to reconnect. This is called on instantiation.
 | close | Disconnect from the remote server
 | bufferedMessageCount | If currently disconnected, the number of messages in offline buffer
-| dropperMessageCount | If currently disconnected, number of messages that have been discarded
+| droppedMessageCount | If currently disconnected, number of messages that have been discarded
 
 

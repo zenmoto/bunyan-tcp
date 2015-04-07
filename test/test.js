@@ -1,6 +1,6 @@
 var expect = require('chai').expect;
 
-var bunyanTcp = require('../lib/bunyan-tcp');
+var bunyanTcp = require('..');
 var Promise = require('rsvp').Promise;
 var testServer = require('./test_server');
 

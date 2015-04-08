@@ -272,3 +272,30 @@ describe("Disconnect", function() {
     });
   })
 });
+
+describe("Transforms", function() {
+  it("should optionally transform objects on write", function() {
+    return testServer.getTestServer(TEST_PORT).then(function(server) {
+      return new Promise(function(resolve, reject) {
+        var stream = bunyanTcp.createBunyanStream({
+          server: '127.0.0.1',
+          port: TEST_PORT,
+          transform: function(event) {
+            var newEvent = {};
+            for (var key in event) {
+              newEvent[key] = event[key].toUpperCase();
+            }
+            return newEvent;
+          }
+        });
+        var testObj = {"one": "peter piper picked"};
+        stream.write(testObj);
+        setTimeout(function() {
+          var msg = JSON.parse(server.messages.pop());
+          expect(msg).to.have.property("one", testObj.one.toUpperCase());
+          resolve();
+        }, 10);
+      });
+    });
+  });
+})

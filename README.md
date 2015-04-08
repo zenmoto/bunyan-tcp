@@ -23,13 +23,14 @@ var log = bunyan.createLogger({
 
 ```
 
-## Parameters
+## Options
 | Name | Description | Default |
 |------|-------------|---------|
 | server (required) | The host to connect to | _none_ |
 | port (required) | The server port to connect to | _none_ | 
 | reconnectDelay | Time to pause between disconnect and reconnect (in ms) | 500ms | 
 | offlineBuffer | Number of messages to buffer while disconnected | 100 messages |
+| transform | A function that takes a bunyan event and returns a JSON object that will be serialized to the remote server | identity |
 
 ## Events
 | Name | Description | Arguments

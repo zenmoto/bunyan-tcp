@@ -1,6 +1,6 @@
 {
   "name": "bunyan-tcp",
-  "version": "0.9.2",
+  "version": "0.9.3",
   "description": "An adapter stream bunyan events to a TCP socket (with reconnection and buffering)",
   "repository": {
     "type" : "git",

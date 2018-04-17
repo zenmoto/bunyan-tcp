@@ -250,14 +250,14 @@ describe("Disconnect", function() {
           connected = true;
         });
         var timeout = setTimeout(function() {
-          throw new Error("Didn't get a disconnect from the stream");
+          reject(new Error("Didn't get a disconnect from the stream"));
         }, 500);
 
         stream.on('disconnect', function() {
           expect(connected).to.equal(true);
           clearTimeout(timeout);
           stream.on('connecting', function() {
-            throw new Error("Tried reconnecting.  That's not right.");
+            reject(new Error("Tried reconnecting.  That's not right."));
           });
           setTimeout(function() { // Give it a chance to try to reconnect
             resolve();
@@ -295,7 +295,7 @@ describe("Transforms", function() {
           expect(msg).to.have.property("one", testObj.one.toUpperCase());
           resolve();
         }, 10);
-      });
+      }).finally(function() {server.close();});
     });
   });
 })

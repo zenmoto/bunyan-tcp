@@ -136,3 +136,4 @@ function createBunyanStream(args) {
 }
 
 module.exports.createBunyanStream = createBunyanStream;
+module.exports.MessageBuffer = MessageBuffer;

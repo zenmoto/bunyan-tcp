@@ -303,19 +303,19 @@ describe("Transforms", function() {
 describe("MessageBuffer", function() {
   it("should drain all of the messages up to the buffer size", function() {
     var messageBuffer = new bunyanTcp.MessageBuffer(5);
+    var values = []
 
+    messageBuffer.add(0)
     messageBuffer.add(1)
     messageBuffer.add(2)
     messageBuffer.add(3)
     messageBuffer.add(4)
-    messageBuffer.add(5)
-
-    var values = []
 
     messageBuffer.drain(function (value) {
       values.push(value);
     });
 
+    messageBuffer.add(5)
     messageBuffer.add(6)
     messageBuffer.add(7)
     messageBuffer.add(8)
@@ -325,6 +325,6 @@ describe("MessageBuffer", function() {
       values.push(value);
     });
 
-    expect(values).to.deep.equal([ 1, 2, 3, 4, 5, 6, 7, 8, 9 ]);
+    expect(values).to.deep.equal([ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]);
   });
 });

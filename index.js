@@ -31,8 +31,9 @@ MessageBuffer.prototype.drain = function(cb) {
   var oldBuffer = this.buffer;
   this.buffer = [];
 
-  oldBuffer.forEach(cb)
+  oldBuffer.forEach(cb);
 
+  this.messagesAdded = 0;
   this.messagesDropped = 0;
   delete old_buffer;
 }

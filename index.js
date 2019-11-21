@@ -12,13 +12,11 @@ function MessageBuffer(messageCount) {
 }
 
 MessageBuffer.prototype.add = function(message) {
-  var idx = this.messagesAdded % this.messageMax;
-  if (this.messagesAdded++ < this.messageMax) {
-    this.buffer.push(message);
-  } else {
-    this.buffer[idx] = message;
+  if (this.messagesAdded++ >= this.messageMax) {
+    this.buffer.shift()
     this.messagesDropped++;
   }
+  this.buffer.push(message);
 }
 
 MessageBuffer.prototype.length = function() {
@@ -33,14 +31,8 @@ MessageBuffer.prototype.drain = function(cb) {
   var oldBuffer = this.buffer;
   this.buffer = [];
 
-  if (this.messagesAdded > oldBuffer.length) {
-    var startIdx = this.messagesAdded % oldBuffer.length;
-    for (var i=startIdx; i<(oldBuffer.length + startIdx); i++) {
-      cb(oldBuffer[i % this.messageMax]);
-    }
-  } else {
-    oldBuffer.forEach(cb);
-  }
+  oldBuffer.forEach(cb)
+
   this.messagesDropped = 0;
   delete old_buffer;
 }

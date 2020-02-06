@@ -270,7 +270,7 @@ describe("Disconnect", function() {
 
       }).finally(function() {server.close();});
     });
-  })
+  });
 });
 
 describe("Transforms", function() {
@@ -298,4 +298,34 @@ describe("Transforms", function() {
       }).finally(function() {server.close();});
     });
   });
-})
+});
+
+describe("MessageBuffer", function() {
+  it("should drain all of the messages up to the buffer size", function() {
+    var messageBuffer = new bunyanTcp.MessageBuffer(5);
+    var values = []
+
+    // use the whole buffer
+    messageBuffer.add(1)
+    messageBuffer.add(2)
+    messageBuffer.add(3)
+    messageBuffer.add(4)
+    messageBuffer.add(5)
+
+    messageBuffer.drain(function (value) {
+      values.push(value);
+    });
+
+    // don't use the whole buffer
+    messageBuffer.add(6)
+    messageBuffer.add(7)
+    messageBuffer.add(8)
+    messageBuffer.add(9)
+
+    messageBuffer.drain(function (value) {
+      values.push(value);
+    });
+
+    expect(values).to.deep.equal([ 1, 2, 3, 4, 5, 6, 7, 8, 9 ]);
+  });
+});
